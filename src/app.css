@@ -12,3 +12,22 @@
   top: 33vh;
   left: 50%;
 }
+
+.modal.show {
+  top: 10vh;
+  display: block;
+}
+
+.current-condition {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.weather {
+  text-align: center;
+}
+
+.weather .weather-title {
+  font-size: 2.5rem;
+  color: #fff;
+}

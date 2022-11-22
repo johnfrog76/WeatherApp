@@ -5,6 +5,52 @@
   <require from="./components/loading/loading"></require>
   <require from="./components/temp-toggle/temp-toggle"></require>
   <header></header>
+
+  <div class="modal" class.bind="showModal ? 'show' : ''" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Weather for ${currentItem.dt_txt}</h5>
+          <button type="button" class="close" click.delegate="hideModal()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="current-condition"> 
+            <div class="weather">
+              <h1 class="weather-title">${city} | ${currentItem.weather[0].main}
+                <span class="fa fa-sun" if.bind="currentItem.weather[0].main === 'Clear'"></span>
+                <span class="fa fa-cloud" if.bind="currentItem.weather[0].main === 'Clouds'"></span>
+                <span class="fa fa-tint" if.bind="currentItem.weather[0].main === 'Rain'"></span>
+              </h1>
+              <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(currentItem.main.temp - 273) + 32).toFixed(0)} &deg;F</span>
+              <span if.bind="showCelsius" class="celcius">${ (currentItem.main.temp - 273.15).toFixed(0) } &deg;C</span>
+            </div>
+          </div>
+          <ul class="current-condition-list">
+            <li>humidity: <span>${currentItem.main.humidity} %</span></li>
+            <li>feels_like: <span>${currentItem.main.feels_like}</span>
+            </li>
+            <li>grnd_level: <span>${currentItem.main.grnd_level}</span></li>
+            <li>pressure: <span>${currentItem.main.pressure}</span></li>
+            <li>sea_level: <span>${currentItem.main.sea_level}</span></li>
+            <li>temp_max: <span>${currentItem.main.temp_max}</span></li>
+            <li>temp_min: <span>${currentItem.main.temp_min}</span></li> 
+            <li>wind direction: <span>${currentItem.wind.deg}</span>
+              <span>${getWindDirection(currentItem.wind.deg)}</span>
+              <span class="fa fa-arrow-right" style.bind="'transform: rotate(' + (90 + currentItem.wind.deg) +'deg)'"></span>
+            </li>
+            <li>wind gust: <span>${currentItem.wind.gust}</span></li>
+            <li>wind speed: <span>${currentItem.wind.speed}</span></li>  
+          </ul>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" click.delegate="hideModal()" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   
   <div class="d-flex justify-content-center align-items-center container">
     <div class="row">
@@ -39,11 +85,11 @@
               <empty-message class="empty-message" showmore.bind="emptyMesasageMore" message.bind="emptyMessage"></empty-message>
             </td>
         </tr>
-        <tr class="table-dark" repeat.for="item of forcastlist">
-          <th scope="row">${item.dt_txt}</th>
+        <tr class="table-dark" repeat.for="item of forcastlist" click.delegate="displayModal($index)">
+          <th scope="row" click.delegate="display">${item.dt_txt}</th>
           <td>
             <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(item.main.temp - 273) + 32).toFixed(0)}</span>
-            <span if.bind="showCelsius" class="celcius">${ (item.main.temp - 273.15).toFixed(2) }</span>
+            <span if.bind="showCelsius" class="celcius">${ (item.main.temp - 273.15).toFixed(0) }</span>
           </td>
           <td>${item.main.humidity}</td>
           <td>
