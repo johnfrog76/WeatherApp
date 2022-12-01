@@ -8,6 +8,8 @@ export class TempToggle {
   onTempClick (evt) {
     if (evt.type === 'click' || (evt.type === 'keydown' && evt.key.toLowerCase() === 'enter')) {
       this.handleclick();
+    } else {
+      return true;
     }
   }
 

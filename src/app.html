@@ -85,7 +85,7 @@
               <empty-message class="empty-message" showmore.bind="emptyMesasageMore" message.bind="emptyMessage"></empty-message>
             </td>
         </tr>
-        <tr class="table-dark" repeat.for="item of forcastlist" click.delegate="displayModal($index)">
+        <tr tabindex="0" class="table-dark" repeat.for="item of forcastlist" keydown.delegate="handleModal($event, $index)" click.delegate="displayModal($index)">
           <th scope="row" click.delegate="display">${item.dt_txt}</th>
           <td>
             <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(item.main.temp - 273) + 32).toFixed(0)}</span>

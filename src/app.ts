@@ -11,8 +11,10 @@ export class App {
   showCelsius: boolean = true;
   emptyMessage: string = 'there is no weather data.';
   emptyMesasageMore: boolean = true;
-  showModal: boolean = true;
+  showModal: boolean = false;
   currentItem: any = {};
+  hasError = false;
+  errorMesage = '';
   constructor(private weatherService: WeatherService) {}
 
   activate() {
@@ -22,6 +24,18 @@ export class App {
   displayModal(idx: number) {
     this.currentItem = this.forcastlist[idx || 0];
     this.showModal = true;
+  }
+
+  handleModal(evt, idx) {
+    if (evt.type === 'keydown' && evt.key.toLowerCase() === 'enter') {
+      this.displayModal(idx);
+      setTimeout(() => {
+        const ele: any = document.querySelector('.close');
+        ele.focus();
+      })
+    } else {
+      return true;
+    }
   }
 
   getWindDirection (deg: number) {
@@ -62,13 +76,9 @@ export class App {
   }
 
   forecast() {
-    let city = this.city //get the city from user
+    let city = this.city;
     this.isLoading = true;
     this.weatherService.getForecast(city).then(forecast => {
-      //this.forcastlist = forecast as List;
-
-      //@ts-ignore
-      console.log(forecast.list);
       //@ts-ignore
       this.forcastlist = forecast.list.map(item => {
         var dt = new Date(item.dt * 1000);
