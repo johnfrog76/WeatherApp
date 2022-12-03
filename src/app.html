@@ -54,37 +54,34 @@
       </div>
     </div>
   </div>
-  
-  <div class=" container">
+
+  <div class="container">
     <div class="row">
       <div class="col col-12">
         <form class="d-flex justify-content-center align-items-center" submit.delegate = "forecast()" _lpchecked="1">
-          <!-- <input class="form-control mr-sm-2" type="text" value.bind = "city" placeholder="Ex: Seattle"> -->
           <div class="suggest-city-control">
             <input class="form-control" type="text" value.bind="queryCity" keyup.trigger="queryCities($event)" placeholder="search cities">
             <div class="dropdown-menu show" if.bind="queryResults.length > 0 && queryCity.length > 0 && queryCity !== city" class="results">
               <button repeat.for="result of queryResults" 
-              click.delegate="selectQueryCity($event)"
-              class="btn btn-link"><span class="query-city">${result.city}</span>, <span class="query-state">${result.state}</span>
-            </button>
+                click.delegate="selectQueryCity($event)"
+                class="btn btn-link">
+                <span class="query-city">${result.city}</span>, <span class="query-state">${result.state}</span>
+              </button>
             </div>
           </div>
           <button class="btn btn-secondary ml-2 mr-2" type="button" click.delegate="clearField($event)">Clear</button>
           <button class="btn btn-primary" disabled.bind="queryCity !== city || city === ''" type="submit">Search</button>
         </form>
-
       </div>
     </div>
   </div>
 
-  <!-- Add a table to display the forecast -->
   <div class="d-flex justify-content-center align-items-center container">
     <loading if.bind="isLoading"></loading>
     <table class="table table-hover" if.bind="!isLoading">
       <thead>
         <tr class="table-primary">
           <th scope="col">Date and Time</th>
-          <!-- <th scope="col">Temperature (K)</th> -->
           <th scope="col">
             <temp-toggle celcius.bind="showCelsius" handleclick.call="toggleTempFormat()"></temp-toggle>
           </th>
@@ -99,7 +96,7 @@
             </td>
         </tr>
         <tr tabindex="0" class="table" repeat.for="item of forcastlist" keydown.delegate="handleModal($event, $index)" click.delegate="displayModal($index)">
-          <th scope="row" click.delegate="display">${item.dt_txt}</th>
+          <td scope="row" click.delegate="display">${item.dt_txt}</td>
           <td>
             <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(item.main.temp - 273) + 32).toFixed(0)}</span>
             <span if.bind="showCelsius" class="celcius">${ (item.main.temp - 273.15).toFixed(0) }</span>

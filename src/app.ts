@@ -121,13 +121,13 @@ export class App {
         return {
           ...item,
           dt_txt: date.format(dt, 'dddd, MM/DD - hh:mm A')
-
         }
       });
+      
       this.isLoading = false;
       this.showCelsius = false;
-    }).catch(error => {
-      console.log(error);
+    }).catch(err => {
+      console.error(err)
       this.isLoading = false;
     });
   }
