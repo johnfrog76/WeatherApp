@@ -1,0 +1,9 @@
+
+.column-title-f {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.column-title-f:focus-visible {
+  outline: 2px dashed #fff;
+}

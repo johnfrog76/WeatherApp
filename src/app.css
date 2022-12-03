@@ -1,3 +1,4 @@
+
 .container {
   margin-top: 2rem;
 }
@@ -16,7 +17,50 @@
 .modal.show {
   top: 10vh;
   display: block;
+  position: absolute;
+  z-index: inherit;
 }
+
+.modal.fade.show {
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  z-index: 5;
+}
+
+
+:focus {
+  outline: 2px dashed;
+}
+
+.suggest-city-control {
+  position: relative;
+  min-width: 200px;
+  flex: 1;
+}
+
+.suggest-city-control .dropdown-menu {
+  min-width: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.dropdown-menu .btn.btn-link {
+  min-width: 100%;
+  text-align: left;
+}
+.dropdown-menu .btn.btn-link:focus {
+  box-shadow: none;
+  outline: 2px dashed;
+  outline-offset: -2px;
+}
+
 
 .current-condition {
   font-size: 1.25rem;
@@ -29,5 +73,4 @@
 
 .weather .weather-title {
   font-size: 2.5rem;
-  color: #fff;
 }

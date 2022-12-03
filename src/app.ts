@@ -1,11 +1,16 @@
 import { WeatherService } from './services/weather-service'
 import { inject } from 'aurelia-framework';
 import { List } from './interfaces/weather';
+import CITY_DATA from './utilities/cities.json';
 import date from 'date-and-time';
 
 @inject(WeatherService)
 export class App {
-  city = 'New York'; // added default city
+  city = '';
+  queryCity='';
+  queryResults: {city: string; state: string}[] = [];
+  city_list: {city: string; state: string}[] = [];
+  
   forcastlist: List[] = [];
   isLoading: boolean = true;
   showCelsius: boolean = true;
@@ -15,15 +20,44 @@ export class App {
   currentItem: any = {};
   hasError = false;
   errorMesage = '';
+
   constructor(private weatherService: WeatherService) {}
 
   activate() {
-    this.forecast();
+    this.city_list = CITY_DATA;
+    this.isLoading = false;
+  }
+
+  queryCities() {
+
+    const tempResults = this.city_list.filter(c => 
+          c.city.toLowerCase().indexOf(this.queryCity.toLowerCase()) !== -1);
+
+    if (tempResults.length > 0 && tempResults.length < 10) {
+      this.queryResults = tempResults.slice(0);
+    } else {
+      this.queryResults = [];
+    }
+
+    return true;
+  }
+
+  selectQueryCity(evt) {
+    evt.preventDefault;
+    const inputEl: any = document.querySelector('.suggest-city-control > input');
+    const cityText = evt.target.firstChild.innerText;
+
+    inputEl.focus();
+    this.queryResults = [];
+    this.queryCity = '';
+    this.queryCity = cityText;
+    this.city = cityText;
   }
 
   displayModal(idx: number) {
     this.currentItem = this.forcastlist[idx || 0];
     this.showModal = true;
+    document.querySelector('.show');
   }
 
   handleModal(evt, idx) {
@@ -66,8 +100,9 @@ export class App {
   }
 
   clearField (evt) {
-    // console.log(evt)
     this.city = '';
+    this.queryCity = '';
+    this.queryResults = [];
     this.forcastlist = [];
   }
 

@@ -1,3 +1,4 @@
+import './temp-toggle.css';
 import {bindable} from 'aurelia-framework';
 
 export class TempToggle {
