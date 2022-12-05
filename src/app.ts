@@ -43,9 +43,16 @@ export class App {
   }
 
   selectQueryCity(evt) {
+
     evt.preventDefault;
     const inputEl: any = document.querySelector('.suggest-city-control > input');
-    const cityText = evt.target.firstChild.innerText;
+    let cityText = '';
+
+    if (evt.target.tagName === 'SPAN') {
+      cityText = evt.target.parentElement.children[0].innerText;
+    } else {
+      cityText = evt.target.children[0].innerText;
+    }
 
     inputEl.focus();
     this.queryResults = [];
