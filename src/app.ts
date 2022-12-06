@@ -42,9 +42,32 @@ export class App {
     return true;
   }
 
-  selectQueryCity(evt) {
+  trapKeys(evt) {
+    const target = evt.target;
+    if (target.tagName === 'BUTTON' && evt.code.toLowerCase() === 'escape') {
+      evt.target.closest('.suggest-city-control').children[0].focus();
+      return true;
+    } 
 
-    evt.preventDefault;
+    if (target.tagName === 'SPAN') {
+      const tabStopEles = document.getElementsByClassName('tabstop')
+      const btnEles = target.parentElement.getElementsByTagName('BUTTON');
+      const firstBtnEl = btnEles[0];
+      const lastBtnEl = btnEles[btnEles.length - 1];
+  
+      if (evt.code.toLowerCase() === 'tab' && evt.type === 'keyup') {
+        if (evt.target.id === 'tabstop1' && evt.shiftKey === true) {
+          lastBtnEl.focus();
+        } else {
+          firstBtnEl.focus();
+        }
+      } 
+     }
+    return true;
+  }
+
+  selectQueryCity(evt) {
+    evt.preventDefault();
     const inputEl: any = document.querySelector('.suggest-city-control > input');
     let cityText = '';
 

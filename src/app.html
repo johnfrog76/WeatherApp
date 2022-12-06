@@ -59,18 +59,22 @@
     <div class="row">
       <div class="col col-12">
         <form class="d-flex justify-content-center align-items-center" submit.delegate = "forecast()" _lpchecked="1">
+          <button class="btn btn-secondary mr-2" type="button" click.delegate="clearField($event)">Clear</button>
           <div class="suggest-city-control">
             <input class="form-control" type="text" value.bind="queryCity" keyup.trigger="queryCities($event)" placeholder="search cities">
             <div class="dropdown-menu show" if.bind="queryResults.length > 0 && queryCity.length > 0 && queryCity !== city" class="results">
+              <span class="tabstop sr-only" id="tabstop1" keyup.trigger="trapKeys($event)" tabindex="0"></span>
               <button repeat.for="result of queryResults" 
                 click.delegate="selectQueryCity($event)"
+                keyup.trigger="trapKeys($event)"
+                id="city-search-result-${$index}"
                 class="btn btn-link">
                 <span class="query-city">${result.city}</span>, <span class="query-state">${result.state}</span>
               </button>
+              <span class="tabstop sr-only" id="tabstop2" keyup.trigger="trapKeys($event)" tabindex="0"></span>
             </div>
           </div>
-          <button class="btn btn-secondary ml-2 mr-2" type="button" click.delegate="clearField($event)">Clear</button>
-          <button class="btn btn-primary" disabled.bind="queryCity !== city || city === ''" type="submit">Search</button>
+          <button class="btn btn-primary ml-2" disabled.bind="queryCity !== city || city === ''" type="submit">Search</button>
         </form>
       </div>
     </div>
