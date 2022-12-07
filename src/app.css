@@ -12,6 +12,32 @@
   overflow:hidden;
 }
 
+#submitSearch {
+  position: absolute;
+  top: 0;
+  left: 18px;
+  z-index: 5;
+}
+
+#clearSearch {
+  position: absolute;
+  top: 0;
+  right: 18px;
+  z-index: 5;
+}
+
+#submitSearch:focus, #clearSearch:focus {
+  outline: 2px solid !important;
+  outline-offset: -7px !important;
+  box-shadow: none;;
+}
+
+
+.suggest-city-control input {
+  padding-left: 45px;
+
+}
+
 .empty-message {
   text-align: center;
 }

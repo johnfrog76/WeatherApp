@@ -1,0 +1,15 @@
+<template class="suggest-city-control">
+
+    <input class="form-control" type="text" value.bind="querycity" keyup.trigger="querycities($event)" placeholder="search cities">
+    <div class="dropdown-menu show" if.bind="queryresults.length > 0 && querycity.length > 0 && querycity !== citychild" class="results">
+      <span class="tabstop sr-only" id="tabstop1" keyup.trigger="trapkeys($event)" tabindex="0"></span>
+      <button repeat.for="result of queryresults" 
+        click.delegate="handleSelectQueryCity($event)"
+        keyup.trigger="trapkeys($event)"
+        id="city-search-result-${$index}"
+        class="btn btn-link">
+        <span class="query-city">${result.city}</span>, <span class="query-state">${result.state}</span>
+      </button>
+      <span class="tabstop sr-only" id="tabstop2" keyup.trigger="trapkeys($event)" tabindex="0"></span>
+    </div>
+</template>

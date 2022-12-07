@@ -28,7 +28,8 @@ export class App {
     this.isLoading = false;
   }
 
-  queryCities() {
+  queryCities(evt) {
+    this.queryCity = evt.target.value;
 
     const tempResults = this.city_list.filter(c => 
           c.city.toLowerCase().indexOf(this.queryCity.toLowerCase()) !== -1);
@@ -130,6 +131,8 @@ export class App {
   }
 
   clearField (evt) {
+    const inputEl: HTMLInputElement = document.querySelector('.suggest-city-control input');
+    inputEl.focus();
     this.city = '';
     this.queryCity = '';
     this.queryResults = [];
