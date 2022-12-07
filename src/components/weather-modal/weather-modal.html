@@ -1,0 +1,59 @@
+<template>
+  <div class="modal fade" class.bind="showmodal ? 'show' : ''" tabindex="-1" click.delegate="hidemodal()" data-dismiss="modal">
+    <div class="modal" class.bind="showmodal ? 'show' : ''"  tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Weather for ${current.dt_txt}</h5>
+            <button type="button" class="close" click.delegate="hidemodal()" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="current-condition"> 
+              <div class="weather">
+                <h1 class="weather-title">${ citychild } | ${current.weather[0].main}
+                  <span class="fa fa-sun" if.bind="current.weather[0].main === 'Clear'"></span>
+                  <span class="fa fa-cloud" if.bind="current.weather[0].main === 'Clouds'"></span>
+                  <span class="fa fa-tint" if.bind="current.weather[0].main === 'Rain'"></span>
+                  <span class="fa fa-snowflake" if.bind="current.weather[0].main === 'Snow'"></span>
+                </h1>
+                <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(current.main.temp - 273) + 32).toFixed(0)} &deg;F</span>
+                <span if.bind="showCelsius" class="celcius">${ (current.main.temp - 273.15).toFixed(0) } &deg;C</span>
+              </div>
+            </div>
+            <ul class="current-condition-list">
+              <li>humidity: <span>${current.main.humidity} %</span></li>
+              <li>feels_like: <span>${current.main.feels_like}</span>
+              </li>
+              <li>grnd_level: <span>${current.main.grnd_level}</span></li>
+              <li>pressure: <span>${current.main.pressure}</span></li>
+              <li>sea_level: <span>${current.main.sea_level}</span></li>
+              <li>temp_max: <span>${current.main.temp_max}</span></li>
+              <li>temp_min: <span>${current.main.temp_min}</span></li> 
+              <li>wind direction: <span>${current.wind.deg}</span>
+                <span>${getWindDirection(current.wind.deg)}</span>
+                <span class="fa fa-arrow-right" style.bind="'transform: rotate(' + (90 + current.wind.deg) +'deg)'"></span>
+              </li>
+              <li>wind gust: <span>${current.wind.gust}</span></li>
+              <li>wind speed: <span>${current.wind.speed}</span></li>  
+            </ul>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" click.delegate="hidemodal()" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- 
+current
+city
+showmodal: boolean;
+hidemodal: () => void;
+getWindDirection: (deg: number) => string;
+
+-->
