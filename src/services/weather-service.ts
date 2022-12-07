@@ -1,5 +1,5 @@
 import { HttpClient } from 'aurelia-http-client';
-import { WeatherResponce } from 'interfaces/weather';
+import { WeatherResponce } from '../interfaces/weather/weather';
 import { autoinject } from "aurelia-framework";
 
 @autoinject

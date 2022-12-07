@@ -1,15 +1,16 @@
 import { WeatherService } from './services/weather-service'
 import { inject } from 'aurelia-framework';
-import { List } from './interfaces/weather';
+import { List } from './interfaces/weather/weather';
 import CITY_DATA from './utilities/cities.json';
 import date from 'date-and-time';
+import { iCity } from './interfaces/city/city';
 
 @inject(WeatherService)
 export class App {
   city = '';
   queryCity='';
-  queryResults: {city: string; state: string}[] = [];
-  city_list: {city: string; state: string}[] = [];
+  queryResults: iCity[] = [];
+  city_list: iCity[] = [];
   
   forcastlist: List[] = [];
   isLoading: boolean = true;
@@ -131,8 +132,10 @@ export class App {
   }
 
   clearField (evt) {
-    const inputEl: HTMLInputElement = document.querySelector('.suggest-city-control input');
-    inputEl.focus();
+    const inputEl: HTMLInputElement | null = document.querySelector('.suggest-city-control input');
+    if (inputEl) {
+      inputEl.focus();
+    }
     this.city = '';
     this.queryCity = '';
     this.queryResults = [];
@@ -143,7 +146,8 @@ export class App {
     this.showCelsius = !this.showCelsius;
   }
 
-  forecast() {
+  forecast(evt: Event) {
+    evt.preventDefault();
     let city = this.city;
     this.isLoading = true;
     this.weatherService.getForecast(city).then(forecast => {

@@ -1,15 +1,20 @@
-<template class="suggest-city-control">
-
-    <input class="form-control" type="text" value.bind="querycity" keyup.trigger="querycities($event)" placeholder="search cities">
-    <div class="dropdown-menu show" if.bind="queryresults.length > 0 && querycity.length > 0 && querycity !== citychild" class="results">
-      <span class="tabstop sr-only" id="tabstop1" keyup.trigger="trapkeys($event)" tabindex="0"></span>
-      <button repeat.for="result of queryresults" 
-        click.delegate="handleSelectQueryCity($event)"
-        keyup.trigger="trapkeys($event)"
-        id="city-search-result-${$index}"
-        class="btn btn-link">
-        <span class="query-city">${result.city}</span>, <span class="query-state">${result.state}</span>
-      </button>
-      <span class="tabstop sr-only" id="tabstop2" keyup.trigger="trapkeys($event)" tabindex="0"></span>
+<template class="d-flex justify-content-center align-items-center">
+    <button class="btn btn-link" title="submit search" id="submitSearch" click.trigger="forcastchild($event)"
+        disabled.bind="querycity !== citychild || citychild === ''" type="button"><i class="fa fa-search"></i></button>
+    <div class="suggest-city-control">
+      <input class="form-control" type="text" value.bind="querycity" keyup.trigger="querycities($event)" placeholder="search cities">
+      <div class="dropdown-menu show" if.bind="queryresults.length > 0 && querycity.length > 0 && querycity !== citychild" class="results">
+        <span class="tabstop sr-only" id="tabstop1" keyup.trigger="trapkeys($event)" tabindex="0"></span>
+        <button repeat.for="result of queryresults" 
+          click.delegate="handleSelectQueryCity($event)"
+          keyup.trigger="trapkeys($event)"
+          id="city-search-result-${$index}"
+          class="btn btn-link">
+          <span class="query-city">${result.city}</span>, <span class="query-state">${result.state}</span>
+        </button>
+        <span class="tabstop sr-only" id="tabstop2" keyup.trigger="trapkeys($event)" tabindex="0"></span>
+      </div>
     </div>
+    <button class="btn btn-link" title="clear search" id="clearSearch" if.bind="querycity.length > 0"
+      type="button" click.delegate="clearfield($event)"><i class="fa fa-times"></i></button>
 </template>
