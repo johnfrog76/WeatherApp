@@ -1,8 +1,8 @@
-<template class="d-flex justify-content-center align-items-center">
-    <button class="btn btn-link" title="submit search" id="submitSearch" click.trigger="forcastchild($event)"
+<template class="d-flex justify-content-center align-items-center suggest-city-inner">
+    <button class="btn btn-link" title="submit search" id="submitSearch" click.trigger="forecastchild($event)"
         disabled.bind="querycity !== citychild || citychild === ''" type="button"><i class="fa fa-search"></i></button>
     <div class="suggest-city-control">
-      <input class="form-control" type="text" value.bind="querycity" keyup.trigger="querycities($event)" placeholder="search cities">
+      <input class="form-control" type="text" value.bind="querycity" keyup.trigger="handleQueryCity($event)" placeholder="search cities">
       <div class="dropdown-menu show" if.bind="queryresults.length > 0 && querycity.length > 0 && querycity !== citychild" class="results">
         <span class="tabstop sr-only" id="tabstop1" keyup.trigger="trapkeys($event)" tabindex="0"></span>
         <button repeat.for="result of queryresults" 

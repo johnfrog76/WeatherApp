@@ -6,6 +6,7 @@
   <require from="./components/temp-toggle/temp-toggle"></require>
   <require from="./components/suggest-city/suggest-city"></require>
   <require from="./components/weather-modal/weather-modal"></require>
+  <require from="./components/aria-live/aria-live"></require>
   
   <header></header>
   
@@ -20,7 +21,7 @@
   <div class="container">
     <div class="row">
       <div class="col col-12">
-        <form aria-label="search city control">
+        <section class="section-select-city greybg p-5" aria-label="search city control">
           <suggest-city
             querycity.bind="queryCity"
             citychild.bind="city"
@@ -29,9 +30,14 @@
             selectquerycity.call="selectQueryCity($event)"
             trapkeys.call="trapKeys($event)"
             clearfield.call="clearField($event)"
-            forcastchild.call="forecast($event)"
+            forecastchild.call="forecast($event)"
           ></suggest-city>
-        </form>
+        </section>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h1 class="forecast-title-text">Forecast <span if.bind="forcastlist.length !== 0 && cityResponse === city && queryCity === city">for ${city}</span></h1>
       </div>
     </div>
   </div>
@@ -76,4 +82,5 @@
       </tbody>
     </table> 
   </div>
+  <aria-live message.bind="ariaMessage"></aria-live>
 </template>

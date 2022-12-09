@@ -12,30 +12,49 @@
   overflow:hidden;
 }
 
+.greybg {
+  background-color: #efefef; 
+}
+
+.section-select-city {
+  position: relative;
+  width: 100%;
+}
+
+.section-select-city .suggest-city-inner {
+  position: relative;
+}
+
+.forecast-title-text {
+  margin-top: 1.5rem;
+}
+
 #submitSearch {
   position: absolute;
   top: 0;
-  left: 18px;
+  left: 0.5rem;
   z-index: 5;
 }
 
 #clearSearch {
   position: absolute;
   top: 0;
-  right: 18px;
+  right: 0.5rem;
   z-index: 5;
 }
 
 #submitSearch:focus, #clearSearch:focus {
   outline: 2px solid !important;
   outline-offset: -7px !important;
-  box-shadow: none;;
+  box-shadow: none;
 }
 
+#submitSearch:focus + .suggest-city-control input {
+  padding-left: 55px;
+}
 
 .suggest-city-control input {
   padding-left: 45px;
-
 }
 
 .empty-message {

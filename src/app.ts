@@ -1,3 +1,4 @@
+
 import { WeatherService } from './services/weather-service'
 import { inject } from 'aurelia-framework';
 import { List } from './interfaces/weather/weather';
@@ -8,10 +9,11 @@ import { iCity } from './interfaces/city/city';
 @inject(WeatherService)
 export class App {
   city = '';
+  cityResponse: string = '';
   queryCity='';
   queryResults: iCity[] = [];
   city_list: iCity[] = [];
-  
+  ariaMessage: string = ''
   forcastlist: List[] = [];
   isLoading: boolean = true;
   showCelsius: boolean = true;
@@ -23,6 +25,13 @@ export class App {
   errorMesage = '';
 
   constructor(private weatherService: WeatherService) {}
+
+  liveAriaMessage(message, duration = 10000) {
+    this.ariaMessage = message;
+    setTimeout(() => {
+      this.ariaMessage = '';
+    }, duration);
+  }
 
   activate() {
     this.city_list = CITY_DATA;
@@ -52,7 +61,6 @@ export class App {
     } 
 
     if (target.tagName === 'SPAN') {
-      const tabStopEles = document.getElementsByClassName('tabstop')
       const btnEles = target.parentElement.getElementsByTagName('BUTTON');
       const firstBtnEl = btnEles[0];
       const lastBtnEl = btnEles[btnEles.length - 1];
@@ -79,7 +87,9 @@ export class App {
       cityText = evt.target.children[0].innerText;
     }
 
-    inputEl.focus();
+    setTimeout(() => {
+      inputEl.focus();
+    }, 500)
     this.queryResults = [];
     this.queryCity = '';
     this.queryCity = cityText;
@@ -128,6 +138,9 @@ export class App {
     let city = this.city;
     this.isLoading = true;
     this.weatherService.getForecast(city).then(forecast => {
+
+      //@ts-ignore
+      this.cityResponse = forecast.city.name;
       //@ts-ignore
       this.forcastlist = forecast.list.map(item => {
         var dt = new Date(item.dt * 1000);
@@ -137,7 +150,7 @@ export class App {
           dt_txt: date.format(dt, 'dddd, MM/DD - hh:mm A')
         }
       });
-      
+      this.liveAriaMessage(`forecast has loaded for ${city}`, 5000)
       this.isLoading = false;
       this.showCelsius = false;
     }).catch(err => {
