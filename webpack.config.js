@@ -231,7 +231,7 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
       metadata: {
         // available in index.ejs //
         title: 'weather app',
-        baseUrl
+        baseUrl: process.env.NODE_ENV == 'development' ? '/' : '/WeatherApp'
       }
     }),
     // ref: https://webpack.js.org/plugins/mini-css-extract-plugin/
