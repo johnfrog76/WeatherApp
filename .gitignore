@@ -31,7 +31,7 @@ Thumbs.db
 node_modules
 
 # Compiled files
+#/dist
 /scripts
 /src/environment.ts
-/dist
 /test/coverage-jest
