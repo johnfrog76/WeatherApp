@@ -1,10 +1,10 @@
 {
   "name": "weather-app",
   "description": "An Aurelia client application.",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "homepage": "https://johnfrog76.github.io/WeatherApp",
   "repository": {
-    "type": "???",
-    "url": "???"
+    "url": "git+https://github.com/johnfrog76/WeatherApp.git"
   },
   "license": "MIT",
   "dependencies": {
@@ -14,6 +14,7 @@
     "date-and-time": "^2.4.1"
   },
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "@types/jest": "^27.5.1",
     "@types/node": "^17.0.35",
     "@types/webpack": "^5.28.0",
@@ -58,7 +59,9 @@
     "start": "webpack server",
     "build:dev": "webpack",
     "analyze": "webpack --env production --analyze",
-    "test": "au test"
+    "test": "au test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "engines": {
     "node": ">=14.15.0"
