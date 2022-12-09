@@ -1,3 +1,6 @@
 <template>
-  <div>${message} <span if.bind="showmore">Enter a city?</span></div>
+  <div class="d-flex justify-content-center align-items-center">
+    <span>${message}</span>
+    <button if.bind="showmore" click.delegate="handleUserAction($event)" class="btn btn-link empty-user-action">Enter a city?</button>
+  </div>
 </template>
