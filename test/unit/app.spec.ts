@@ -13,10 +13,10 @@ describe('Stage App Component', () => {
 
   afterEach(() => component.dispose());
 
-  it('should render message', done => {
+  it('should include title', done => {
     component.create(bootstrap).then(() => {
       const view = component.element;
-      expect(view.textContent.trim()).toBe('Hello World!');
+      expect(view.textContent.trim()).toEqual(expect.stringContaining('Forecast'));
       done();
     }).catch(e => {
       fail(e);
