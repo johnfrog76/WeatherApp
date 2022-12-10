@@ -7,6 +7,7 @@ const project = require('./aurelia_project/aurelia.json');
 const { AureliaPlugin } = require('aurelia-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { env } = require('process');
 
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
@@ -17,7 +18,9 @@ const when = (condition, config, negativeConfig) =>
 const title = 'heelo'
 const outDir = path.resolve(__dirname, project.platform.output);
 const srcDir = path.resolve(__dirname, 'src');
-const baseUrl = '/';
+const baseUrl = env.WEBPACK_SERVE ? '/' : '/WeatherApp';
+
+console.log(env.WEBPACK_SERVE ? 'looks like we development' : 'looks like we production')
 
 const cssRules = [
   {
@@ -231,7 +234,7 @@ module.exports = ({ production }, { analyze, hmr, port, host }) => ({
       metadata: {
         // available in index.ejs //
         title: 'weather app',
-        baseUrl: process.env.NODE_ENV == 'development' ? '/' : '/WeatherApp'
+        baseUrl
       }
     }),
     // ref: https://webpack.js.org/plugins/mini-css-extract-plugin/
