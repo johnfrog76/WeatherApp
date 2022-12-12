@@ -64,7 +64,15 @@
               <empty-message class="empty-message" showmore.bind="emptyMesasageMore" message.bind="emptyMessage"></empty-message>
             </td>
         </tr>
-        <tr tabindex="0" class="table" repeat.for="item of forcastlist" keydown.delegate="handleModal($event, $index)" click.delegate="displayModal($index)">
+        <template repeat.for="item of nextSixDays">
+          <tr>
+            <td colspan="4">${item.title}</td>
+          </tr>
+          <tr repeat.for="forcast of item.items">
+            <td>hi</td>
+          </tr>
+        </template>
+        <!-- <tr tabindex="0" class="table" repeat.for="item of forcastlist" keydown.delegate="handleModal($event, $index)" click.delegate="displayModal($index)">
           <td scope="row" click.delegate="display">${item.dt_txt}</td>
           <td>
             <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(item.main.temp - 273) + 32).toFixed(0)}</span>
@@ -78,7 +86,7 @@
             <span class="fa fa-snowflake" if.bind="item.weather[0].main === 'Snow'"></span>
             <span class="ml-2">${item.weather[0].main}</span>
           </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table> 
   </div>

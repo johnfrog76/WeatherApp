@@ -1,10 +1,10 @@
-
 import { WeatherService } from './services/weather-service'
 import { inject } from 'aurelia-framework';
 import { List } from './interfaces/weather/weather';
 import CITY_DATA from './utilities/cities.json';
 import date from 'date-and-time';
 import { iCity } from './interfaces/city/city';
+import { rollupForecast } from 'utilities/functions';
 
 @inject(WeatherService)
 export class App {
@@ -23,8 +23,9 @@ export class App {
   currentItem: any = {};
   hasError = false;
   errorMesage = '';
+  nextSixDays = [];
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService, ) {}
 
   liveAriaMessage(message, duration = 10000) {
     this.ariaMessage = message;
@@ -37,7 +38,7 @@ export class App {
     this.city_list = CITY_DATA;
     this.isLoading = false;
   }
-
+  
   queryCities(evt) {
     this.queryCity = evt.target.value;
 
@@ -153,6 +154,11 @@ export class App {
       this.liveAriaMessage(`forecast has loaded for ${city}`, 5000)
       this.isLoading = false;
       this.showCelsius = false;
+      //@ts-ignore;
+      this.nextSixDays = rollupForecast(this.forcastlist);
+      console.log(this.nextSixDays)
+    }).then(data => {
+
     }).catch(err => {
       console.error(err)
       this.isLoading = false;
