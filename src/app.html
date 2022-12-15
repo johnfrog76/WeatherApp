@@ -68,8 +68,20 @@
           <tr>
             <td colspan="4">${item.title}</td>
           </tr>
-          <tr repeat.for="forcast of item.items">
-            <td>hi</td>
+          <tr repeat.for="forecast of item.items">
+            <td scope="row" click.delegate="display">${forecast.dt_txt}</td>
+            <td>
+              <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(forecast.main.temp - 273) + 32).toFixed(0)}</span>
+              <span if.bind="showCelsius" class="celcius">${ (forecast.main.temp - 273.15).toFixed(0) }</span>
+            </td>
+            <td>${forecast.main.humidity} </td>
+            <td>
+              <span class="fa fa-sun" if.bind="forecast.weather[0].main === 'Clear'"></span>
+              <span class="fa fa-cloud" if.bind="forecast.weather[0].main === 'Clouds'"></span>
+              <span class="fa fa-tint" if.bind="forecast.weather[0].main === 'Rain'"></span>
+              <span class="fa fa-snowflake" if.bind="forecast.weather[0].main === 'Snow'"></span>
+              <span class="ml-2">${forecast.weather[0].main}</span>
+            </td>
           </tr>
         </template>
         <!-- <tr tabindex="0" class="table" repeat.for="item of forcastlist" keydown.delegate="handleModal($event, $index)" click.delegate="displayModal($index)">
