@@ -25,6 +25,11 @@
   position: relative;
 }
 
+input[type=text]:focus-visible {
+  box-shadow: none;
+  outline: 2px solid #000;
+}
+
 .forecast-title-text {
   margin-top: 1.5rem;
 }
@@ -115,6 +120,24 @@
   outline-offset: -2px;
 }
 
+td > .btn:focus-visible {
+  box-shadow: none;
+  outline: 2px solid #000;
+}
+
+.accordion {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.accordion:focus {
+  outline: 0;
+}
+.accordion:focus-visible {
+  outline: 2px dashed #000;
+  outline-offset: 3px;
+}
 
 .current-condition {
   font-size: 1.25rem;

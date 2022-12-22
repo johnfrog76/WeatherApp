@@ -54,8 +54,8 @@
               handleclick.call="toggleTempFormat()"
             ></temp-toggle>
           </th>
-          <th scope="col">Humidity %</th>
           <th scope="col">Weather</th>
+          <th scope="col">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -65,16 +65,21 @@
             </td>
         </tr>
         <template repeat.for="item of nextSixDays">
-          <tr>
-            <td colspan="4">${item.title}</td>
+          <tr if.bind="item.items.length > 0">
+            <td colspan="4">
+              <div tabindex="0" class="accordion" click.delegate="expandItem($event, $index)" keydown.delegate="expandItem($event, $index)">
+                <strong>${item.title}</strong>
+                <i if.bind="!item.expanded" class="fa fa-angle-down"></i>
+                <i if.bind="item.expanded" class="fa fa-angle-up"></i>
+              </div>
+            </td>
           </tr>
-          <tr repeat.for="forecast of item.items">
+          <tr repeat.for="forecast of item.items" if.bind="item.expanded === true && item.items.length > 0">
             <td scope="row" click.delegate="display">${forecast.dt_txt}</td>
             <td>
               <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(forecast.main.temp - 273) + 32).toFixed(0)}</span>
               <span if.bind="showCelsius" class="celcius">${ (forecast.main.temp - 273.15).toFixed(0) }</span>
             </td>
-            <td>${forecast.main.humidity} </td>
             <td>
               <span class="fa fa-sun" if.bind="forecast.weather[0].main === 'Clear'"></span>
               <span class="fa fa-cloud" if.bind="forecast.weather[0].main === 'Clouds'"></span>
@@ -82,23 +87,13 @@
               <span class="fa fa-snowflake" if.bind="forecast.weather[0].main === 'Snow'"></span>
               <span class="ml-2">${forecast.weather[0].main}</span>
             </td>
+            <td>
+              <button click.delegate="displayModal(forecast.idx)"
+                      keydown.delegate="handleModal($event, forecast.idx)"
+                      class="btn btn-sm btn-primary">Details</button>
+            </td>
           </tr>
         </template>
-        <!-- <tr tabindex="0" class="table" repeat.for="item of forcastlist" keydown.delegate="handleModal($event, $index)" click.delegate="displayModal($index)">
-          <td scope="row" click.delegate="display">${item.dt_txt}</td>
-          <td>
-            <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(item.main.temp - 273) + 32).toFixed(0)}</span>
-            <span if.bind="showCelsius" class="celcius">${ (item.main.temp - 273.15).toFixed(0) }</span>
-          </td>
-          <td>${item.main.humidity}</td>
-          <td>
-            <span class="fa fa-sun" if.bind="item.weather[0].main === 'Clear'"></span>
-            <span class="fa fa-cloud" if.bind="item.weather[0].main === 'Clouds'"></span>
-            <span class="fa fa-tint" if.bind="item.weather[0].main === 'Rain'"></span>
-            <span class="fa fa-snowflake" if.bind="item.weather[0].main === 'Snow'"></span>
-            <span class="ml-2">${item.weather[0].main}</span>
-          </td>
-        </tr> -->
       </tbody>
     </table> 
   </div>

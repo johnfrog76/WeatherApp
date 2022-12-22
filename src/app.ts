@@ -54,6 +54,21 @@ export class App {
     return true;
   }
 
+  expandItem (evt, idx) {
+    if ((evt.type === 'keydown' && evt?.code.toLowerCase() === 'enter' ) || evt.type === 'click') {
+      this.nextSixDays = this.nextSixDays.map((item, index) => {
+        if (idx === index) {
+          return {...item, expanded: !item.expanded}
+        } else {
+          return {...item, expanded: false}
+        }
+      });
+    } else {
+      return true;
+    }  
+    
+  }
+
   trapKeys(evt) {
     const target = evt.target;
     if (target.tagName === 'BUTTON' && evt.code.toLowerCase() === 'escape') {
@@ -128,6 +143,7 @@ export class App {
     this.queryCity = '';
     this.queryResults = [];
     this.forcastlist = [];
+    this.nextSixDays = [];
   }
 
   toggleTempFormat () {
@@ -143,12 +159,13 @@ export class App {
       //@ts-ignore
       this.cityResponse = forecast.city.name;
       //@ts-ignore
-      this.forcastlist = forecast.list.map(item => {
+      this.forcastlist = forecast.list.map((item, idx) => {
         var dt = new Date(item.dt * 1000);
 
         return {
           ...item,
-          dt_txt: date.format(dt, 'dddd, MM/DD - hh:mm A')
+          idx: idx,
+          dt_txt: date.format(dt, 'hh:mm A')
         }
       });
       this.liveAriaMessage(`forecast has loaded for ${city}`, 5000)

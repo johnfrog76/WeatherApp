@@ -38,8 +38,9 @@ export const rollupForecast = (forecastList) => {
   
     return {
       dt: item,
-      title: date.format(dateObj, 'dddd, MM/DD'),
-      items: retItems
+      title: date.format(dateObj, 'dddd, MMMM DD'),
+      items: retItems,
+      expanded: idx === 0 ? true : false
     };
 
   });
