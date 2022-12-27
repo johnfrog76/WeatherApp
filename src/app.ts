@@ -112,21 +112,14 @@ export class App {
     this.city = cityText;
   }
 
-  displayModal(idx: number) {
-    this.currentItem = this.forcastlist[idx || 0];
-    this.showModal = true;
-    document.querySelector('.show');
-  }
-
   handleModal(evt, idx) {
-    if (evt.type === 'keydown' && evt.key.toLowerCase() === 'enter') {
-      this.displayModal(idx);
+    if ((evt.type === 'keydown' && evt.key.toLowerCase() === 'enter') || evt.type === 'click') {
+      this.currentItem = this.forcastlist[idx || 0];
+      this.showModal = true;
       setTimeout(() => {
         const ele: any = document.querySelector('.close');
         ele.focus();
       })
-    } else {
-      return true;
     }
   }
 

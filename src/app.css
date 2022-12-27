@@ -48,6 +48,10 @@ input[type=text]:focus-visible {
   z-index: 1;
 }
 
+.table thead th:nth-child(3) {
+ width: 55%;
+}
+
 #submitSearch:focus, #clearSearch:focus {
   outline: 2px solid !important;
   outline-offset: -7px !important;
@@ -64,6 +68,15 @@ input[type=text]:focus-visible {
 
 .empty-message {
   text-align: center;
+}
+
+.btn-primary {
+  background-color: #006ee5;
+}
+
+.btn-secondary:focus-visible {
+  box-shadow: none;
+  outline: 2px solid #000;
 }
 
 .loading-indicator {

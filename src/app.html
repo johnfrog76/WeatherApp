@@ -58,16 +58,17 @@
           <th scope="col">Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="empty-table-content">
         <tr if.bind="forcastlist.length === 0">
             <td colspan="4">
               <empty-message class="empty-message" showmore.bind="emptyMesasageMore" message.bind="emptyMessage"></empty-message>
             </td>
         </tr>
-        <template repeat.for="item of nextSixDays">
+      </tbody>
+      <tbody repeat.for="item of nextSixDays" id.bind="'day-' + $index">
           <tr if.bind="item.items.length > 0">
             <td colspan="4">
-              <div tabindex="0" class="accordion" click.delegate="expandItem($event, $index)" keydown.delegate="expandItem($event, $index)">
+              <div tabindex="0" role="button" class="accordion" aria-expanded="${item.expanded}" aria-controls="day-${$index}" click.delegate="expandItem($event, $index)" keydown.delegate="expandItem($event, $index)">
                 <strong>${item.title}</strong>
                 <i if.bind="!item.expanded" class="fa fa-angle-down"></i>
                 <i if.bind="item.expanded" class="fa fa-angle-up"></i>
@@ -75,7 +76,7 @@
             </td>
           </tr>
           <tr repeat.for="forecast of item.items" if.bind="item.expanded === true && item.items.length > 0">
-            <td scope="row" click.delegate="display">${forecast.dt_txt}</td>
+            <td scope="row">${forecast.dt_txt}</td>
             <td>
               <span if.bind="!showCelsius" class="fahrenheit">${ (1.8*(forecast.main.temp - 273) + 32).toFixed(0)}</span>
               <span if.bind="showCelsius" class="celcius">${ (forecast.main.temp - 273.15).toFixed(0) }</span>
@@ -88,12 +89,11 @@
               <span class="ml-2">${forecast.weather[0].main}</span>
             </td>
             <td>
-              <button click.delegate="displayModal(forecast.idx)"
+              <button click.delegate="handleModal($event, forecast.idx)"
                       keydown.delegate="handleModal($event, forecast.idx)"
                       class="btn btn-sm btn-primary">Details</button>
             </td>
           </tr>
-        </template>
       </tbody>
     </table> 
   </div>
